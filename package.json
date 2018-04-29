@@ -19,7 +19,7 @@
     "fix:tslint": "tslint --fix --project .",
     "test": "run-s test:*",
     "test:lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
-    "test:unit": "nyc mocha spec/**/*.spec.js",
+    "test:unit": "run-p build:test && nyc mocha spec/**/*.spec.js",
     "test:nsp": "nsp check",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "cov": "run-s build:test test:unit cov:html && opn coverage/index.html",
