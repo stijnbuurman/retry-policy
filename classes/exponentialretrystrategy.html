@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>LinearRetryStrategy | retry-policy</title>
+	<title>ExponentialRetryStrategy | retry-policy</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="linearretrystrategy.html">LinearRetryStrategy</a>
+					<a href="exponentialretrystrategy.html">ExponentialRetryStrategy</a>
 				</li>
 			</ul>
-			<h1>Class LinearRetryStrategy</h1>
+			<h1>Class ExponentialRetryStrategy</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 						<a href="retrystrategy.html" class="tsd-signature-type">RetryStrategy</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">LinearRetryStrategy</span>
+								<span class="target">ExponentialRetryStrategy</span>
 							</li>
 						</ul>
 					</li>
@@ -86,21 +86,21 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="linearretrystrategy.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="exponentialretrystrategy.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="linearretrystrategy.html#basedelay" class="tsd-kind-icon">base<wbr>Delay</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="linearretrystrategy.html#maxretries" class="tsd-kind-icon">max<wbr>Retries</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="exponentialretrystrategy.html#maxretries" class="tsd-kind-icon">max<wbr>Retries</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="exponentialretrystrategy.html#mintimeout" class="tsd-kind-icon">min<wbr>Timeout</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="linearretrystrategy.html#gettimeout" class="tsd-kind-icon">get<wbr>Timeout</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="linearretrystrategy.html#isretryallowed" class="tsd-kind-icon">is<wbr>Retry<wbr>Allowed</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="exponentialretrystrategy.html#gettimeout" class="tsd-kind-icon">get<wbr>Timeout</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="exponentialretrystrategy.html#isretryallowed" class="tsd-kind-icon">is<wbr>Retry<wbr>Allowed</a></li>
 							</ul>
 						</section>
 					</div>
@@ -112,42 +112,32 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Linear<wbr>Retry<wbr>Strategy<span class="tsd-signature-symbol">(</span>baseDelay<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, maxRetries<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="linearretrystrategy.html" class="tsd-signature-type">LinearRetryStrategy</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Exponential<wbr>Retry<wbr>Strategy<span class="tsd-signature-symbol">(</span>minTimeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, maxRetries<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="exponentialretrystrategy.html" class="tsd-signature-type">ExponentialRetryStrategy</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="retrystrategy.html">RetryStrategy</a>.<a href="retrystrategy.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/LinearRetryStrategy.ts#L3">RetryStrategy/LinearRetryStrategy.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/ExponentialRetryStrategy.ts#L3">RetryStrategy/ExponentialRetryStrategy.ts:3</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>baseDelay: <span class="tsd-signature-type">number</span></h5>
+									<h5>minTimeout: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> maxRetries: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="linearretrystrategy.html" class="tsd-signature-type">LinearRetryStrategy</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="exponentialretrystrategy.html" class="tsd-signature-type">ExponentialRetryStrategy</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="basedelay" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> base<wbr>Delay</h3>
-					<div class="tsd-signature tsd-kind-icon">base<wbr>Delay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/LinearRetryStrategy.ts#L4">RetryStrategy/LinearRetryStrategy.ts:4</a></li>
-						</ul>
-					</aside>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 					<a name="maxretries" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> max<wbr>Retries</h3>
@@ -156,6 +146,16 @@
 						<p>Inherited from <a href="retrystrategy.html">RetryStrategy</a>.<a href="retrystrategy.html#maxretries">maxRetries</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/RetryStrategy.ts#L4">RetryStrategy/RetryStrategy.ts:4</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="mintimeout" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> min<wbr>Timeout</h3>
+					<div class="tsd-signature tsd-kind-icon">min<wbr>Timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/ExponentialRetryStrategy.ts#L4">RetryStrategy/ExponentialRetryStrategy.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -173,7 +173,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="retrystrategy.html">RetryStrategy</a>.<a href="retrystrategy.html#gettimeout">getTimeout</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/LinearRetryStrategy.ts#L8">RetryStrategy/LinearRetryStrategy.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/ExponentialRetryStrategy.ts#L8">RetryStrategy/ExponentialRetryStrategy.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -231,36 +231,36 @@
 					<li class=" tsd-kind-class">
 						<a href="evenretrystrategy.html" class="tsd-kind-icon">Even<wbr>Retry<wbr>Strategy</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="exponentialretrystrategy.html" class="tsd-kind-icon">Exponential<wbr>Retry<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="genericerrordetectionstrategy.html" class="tsd-kind-icon">Generic<wbr>Error<wbr>Detection<wbr>Strategy</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="linearretrystrategy.html" class="tsd-kind-icon">Linear<wbr>Retry<wbr>Strategy</a>
+						<a href="exponentialretrystrategy.html" class="tsd-kind-icon">Exponential<wbr>Retry<wbr>Strategy</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="linearretrystrategy.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="linearretrystrategy.html#basedelay" class="tsd-kind-icon">base<wbr>Delay</a>
+								<a href="exponentialretrystrategy.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="linearretrystrategy.html#maxretries" class="tsd-kind-icon">max<wbr>Retries</a>
+								<a href="exponentialretrystrategy.html#maxretries" class="tsd-kind-icon">max<wbr>Retries</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="exponentialretrystrategy.html#mintimeout" class="tsd-kind-icon">min<wbr>Timeout</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="linearretrystrategy.html#gettimeout" class="tsd-kind-icon">get<wbr>Timeout</a>
+								<a href="exponentialretrystrategy.html#gettimeout" class="tsd-kind-icon">get<wbr>Timeout</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="linearretrystrategy.html#isretryallowed" class="tsd-kind-icon">is<wbr>Retry<wbr>Allowed</a>
+								<a href="exponentialretrystrategy.html#isretryallowed" class="tsd-kind-icon">is<wbr>Retry<wbr>Allowed</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="genericerrordetectionstrategy.html" class="tsd-kind-icon">Generic<wbr>Error<wbr>Detection<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="linearretrystrategy.html" class="tsd-kind-icon">Linear<wbr>Retry<wbr>Strategy</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="noerrordetectionstrategy.html" class="tsd-kind-icon">No<wbr>Error<wbr>Detection<wbr>Strategy</a>
 					</li>

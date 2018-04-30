@@ -73,6 +73,12 @@
 						<span class="target">RetryStrategy</span>
 						<ul class="tsd-hierarchy">
 							<li>
+								<a href="evenretrystrategy.html" class="tsd-signature-type">EvenRetryStrategy</a>
+							</li>
+							<li>
+								<a href="exponentialretrystrategy.html" class="tsd-signature-type">ExponentialRetryStrategy</a>
+							</li>
+							<li>
 								<a href="linearretrystrategy.html" class="tsd-signature-type">LinearRetryStrategy</a>
 							</li>
 						</ul>
@@ -84,6 +90,18 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="retrystrategy.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private-protected">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="retrystrategy.html#maxretries" class="tsd-kind-icon">max<wbr>Retries</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="retrystrategy.html#gettimeout" class="tsd-kind-icon">get<wbr>Timeout</a></li>
@@ -91,6 +109,45 @@
 							</ul>
 						</section>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Retry<wbr>Strategy<span class="tsd-signature-symbol">(</span>maxRetries<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="retrystrategy.html" class="tsd-signature-type">RetryStrategy</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/RetryStrategy.ts#L3">RetryStrategy/RetryStrategy.ts:3</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> maxRetries: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;-1</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="retrystrategy.html" class="tsd-signature-type">RetryStrategy</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="maxretries" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> max<wbr>Retries</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Retries<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/RetryStrategy.ts#L4">RetryStrategy/RetryStrategy.ts:4</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -105,7 +162,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/9de1df6/src/RetryStrategy/RetryStrategy.ts#L4">RetryStrategy/RetryStrategy.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/RetryStrategy.ts#L6">RetryStrategy/RetryStrategy.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -120,7 +177,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="isretryallowed" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> is<wbr>Retry<wbr>Allowed</h3>
+					<h3>is<wbr>Retry<wbr>Allowed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Retry<wbr>Allowed<span class="tsd-signature-symbol">(</span>retryState<span class="tsd-signature-symbol">: </span><a href="retrystate.html" class="tsd-signature-type">RetryState</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
@@ -128,7 +185,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/9de1df6/src/RetryStrategy/RetryStrategy.ts#L5">RetryStrategy/RetryStrategy.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/c741ec3/src/RetryStrategy/RetryStrategy.ts#L8">RetryStrategy/RetryStrategy.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -160,6 +217,12 @@
 						<a href="errordetectionstrategy.html" class="tsd-kind-icon">Error<wbr>Detection<wbr>Strategy</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="evenretrystrategy.html" class="tsd-kind-icon">Even<wbr>Retry<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="exponentialretrystrategy.html" class="tsd-kind-icon">Exponential<wbr>Retry<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="genericerrordetectionstrategy.html" class="tsd-kind-icon">Generic<wbr>Error<wbr>Detection<wbr>Strategy</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -179,6 +242,12 @@
 					<li class="current tsd-kind-class">
 						<a href="retrystrategy.html" class="tsd-kind-icon">Retry<wbr>Strategy</a>
 						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="retrystrategy.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="retrystrategy.html#maxretries" class="tsd-kind-icon">max<wbr>Retries</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="retrystrategy.html#gettimeout" class="tsd-kind-icon">get<wbr>Timeout</a>
 							</li>
