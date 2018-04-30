@@ -1,4 +1,4 @@
-import { ErrorDetectionStrategy } from '../ErrorDetectionStrategy/ErrorDetectionStrategy';
+import { ErrorDetectionStrategy } from '../ErrorDetectionStrategy';
 import { RetryState } from '../RetryState/RetryState';
 import { RetryStrategy } from '../RetryStrategy/RetryStrategy';
 
@@ -10,7 +10,9 @@ export class RetryPolicy {
 
   constructor(
     protected retryStrategy: RetryStrategy,
-    protected errorDetectionStrategies: ReadonlyArray<ErrorDetectionStrategy> = []
+    protected errorDetectionStrategies: ReadonlyArray<
+      ErrorDetectionStrategy
+    > = []
   ) {
     this.reset();
   }
