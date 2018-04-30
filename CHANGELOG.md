@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/stijnbuurman/retry-policy/compare/v1.0.1...v1.0.2) (2018-04-30)
-
+- Fixed .gitignore not ignoring .d.ts and .js files in src/ and spec/
+- Fixed .prettierignore not ignoring .d.ts files in src/ and spec/
 
 
 <a name="1.0.1"></a>

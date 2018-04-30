@@ -1,10 +1,15 @@
 node_modules
 build
 test
-src/**.js
+src/**/*.js
+src/**/*.d.ts
+
+spec/**/*.js
+spec/**/*.d.ts
 
 coverage
 .nyc_output
 *.log
 
 yarn.lock
+
