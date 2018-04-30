@@ -1,4 +1,4 @@
-import { FaultRecognizer } from '../FaultRecognizer/FaultRecognizer';
+import { ErrorDetectionStrategy } from '../ErrorDetectionStrategy/ErrorDetectionStrategy';
 import { RetryState } from '../RetryState/RetryState';
 import { RetryStrategy } from '../RetryStrategy/RetryStrategy';
 
@@ -10,7 +10,7 @@ export class RetryPolicy {
 
   constructor(
     protected retryStrategy: RetryStrategy,
-    protected faultRecognizers: ReadonlyArray<FaultRecognizer> = []
+    protected errorDetectionStrategies: ReadonlyArray<ErrorDetectionStrategy> = []
   ) {
     this.reset();
   }
@@ -36,12 +36,12 @@ export class RetryPolicy {
   }
 
   public isRetryable(error: Error): boolean {
-    if (!this.faultRecognizers.length) {
+    if (!this.errorDetectionStrategies.length) {
       return true;
     }
 
-    for (const faultRecognizer of this.faultRecognizers) {
-      if (faultRecognizer.isRetryable(error)) {
+    for (const errorDetectionStrategy of this.errorDetectionStrategies) {
+      if (errorDetectionStrategy.isRetryable(error)) {
         return true;
       }
     }

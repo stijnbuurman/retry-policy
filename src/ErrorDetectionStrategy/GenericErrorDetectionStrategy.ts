@@ -1,8 +1,8 @@
-import { FaultRecognizer } from './FaultRecognizer';
+import { ErrorDetectionStrategy } from './ErrorDetectionStrategy';
 
 export type ErrorClass = () => Error;
 
-export class GenericFaultRecognizer extends FaultRecognizer {
+export class GenericErrorDetectionStrategy extends ErrorDetectionStrategy {
   constructor(protected readonly retryableErrors: ReadonlyArray<ErrorClass>) {
     super();
   }
