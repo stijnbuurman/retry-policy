@@ -1,33 +1,19 @@
 import { assert } from 'chai';
 import 'mocha';
-import { RetryState } from '../../src';
 import { LinearRetryStrategy } from '../../src/RetryStrategy';
 
 describe('Linear Retry Strategy', () => {
-  it('should give a timeout of 1000', () => {
-    const linearStrategy = new LinearRetryStrategy(1000);
+  const linearStrategy = new LinearRetryStrategy(1000, 35);
+
+  it('should give a timeout of 1000 on first try', () => {
     assert.equal(linearStrategy.getTimeout(1), 1000);
   });
 
-  it('should give a timeout of 4000', () => {
-    const linearStrategy = new LinearRetryStrategy(2000);
-    assert.equal(linearStrategy.getTimeout(2), 4000);
+  it('should give a timeout of 2000 on second try', () => {
+    assert.equal(linearStrategy.getTimeout(2), 2000);
   });
 
-  it('should give a timeout of 9000', () => {
-    const linearStrategy = new LinearRetryStrategy(3000);
-    assert.equal(linearStrategy.getTimeout(3), 9000);
-  });
-
-  it('should not be retryable when max retries is passed', () => {
-    const linearStrategy = new LinearRetryStrategy(3000, 1);
-    const isRetryAllowed = linearStrategy.isRetryAllowed(new RetryState(4));
-    assert.isFalse(isRetryAllowed);
-  });
-
-  it('should be retryable when max retries is not passed', () => {
-    const linearStrategy = new LinearRetryStrategy(3000, 5);
-    const isRetryAllowed = linearStrategy.isRetryAllowed(new RetryState(4));
-    assert.isTrue(isRetryAllowed);
+  it('should give a timeout of 30000 on thirtieth try', () => {
+    assert.equal(linearStrategy.getTimeout(30), 30000);
   });
 });
