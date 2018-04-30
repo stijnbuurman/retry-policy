@@ -139,7 +139,7 @@ describe('RetryPolicy', () => {
 
       const endTime = Date.now();
 
-      assert.isAtLeast(endTime, startTime + 100 * 3);
+      assert.isAtLeast(endTime, startTime + 100 * 3 - 5); // apparently there is a small chance it is less than 300ms
       assert.isAtMost(endTime, startTime + 100 * 3 + 10); // minor diff maybe
     });
 
@@ -154,7 +154,7 @@ describe('RetryPolicy', () => {
 
       const endTime = Date.now();
 
-      assert.isAtLeast(endTime, startTime + 50 * 12);
+      assert.isAtLeast(endTime, startTime + 50 * 12 - 5); // apparently there is a small chance it is less than 600ms
       assert.isAtMost(endTime, startTime + 50 * 12 + 10); // minor diff maybe
     });
   });
