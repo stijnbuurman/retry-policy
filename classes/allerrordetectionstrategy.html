@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FaultRecognizer | retry-policy</title>
+	<title>AllErrorDetectionStrategy | retry-policy</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="faultrecognizer.html">FaultRecognizer</a>
+					<a href="allerrordetectionstrategy.html">AllErrorDetectionStrategy</a>
 				</li>
 			</ul>
-			<h1>Class FaultRecognizer</h1>
+			<h1>Class AllErrorDetectionStrategy</h1>
 		</div>
 	</div>
 </header>
@@ -70,16 +70,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">FaultRecognizer</span>
+						<a href="errordetectionstrategy.html" class="tsd-signature-type">ErrorDetectionStrategy</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="anyfaultrecognizer.html" class="tsd-signature-type">AnyFaultRecognizer</a>
-							</li>
-							<li>
-								<a href="genericfaultrecognizer.html" class="tsd-signature-type">GenericFaultRecognizer</a>
-							</li>
-							<li>
-								<a href="nofaultrecognizer.html" class="tsd-signature-type">NoFaultRecognizer</a>
+								<span class="target">AllErrorDetectionStrategy</span>
 							</li>
 						</ul>
 					</li>
@@ -92,7 +86,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="faultrecognizer.html#isretryable" class="tsd-kind-icon">is<wbr>Retryable</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="allerrordetectionstrategy.html#isretryable" class="tsd-kind-icon">is<wbr>Retryable</a></li>
 							</ul>
 						</section>
 					</div>
@@ -100,17 +94,18 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="isretryable" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> is<wbr>Retryable</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<h3>is<wbr>Retryable</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Retryable<span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="errordetectionstrategy.html">ErrorDetectionStrategy</a>.<a href="errordetectionstrategy.html#isretryable">isRetryable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/009dd55/src/FaultRecognizer/FaultRecognizer.ts#L3">FaultRecognizer/FaultRecognizer.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/9de1df6/src/ErrorDetectionStrategy/AllErrorDetectionStrategy.ts#L4">ErrorDetectionStrategy/AllErrorDetectionStrategy.ts:4</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -135,29 +130,29 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="anyfaultrecognizer.html" class="tsd-kind-icon">Any<wbr>Fault<wbr>Recognizer</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="faultrecognizer.html" class="tsd-kind-icon">Fault<wbr>Recognizer</a>
+						<a href="allerrordetectionstrategy.html" class="tsd-kind-icon">All<wbr>Error<wbr>Detection<wbr>Strategy</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="faultrecognizer.html#isretryable" class="tsd-kind-icon">is<wbr>Retryable</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="allerrordetectionstrategy.html#isretryable" class="tsd-kind-icon">is<wbr>Retryable</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-class">
-						<a href="genericfaultrecognizer.html" class="tsd-kind-icon">Generic<wbr>Fault<wbr>Recognizer</a>
+						<a href="errordetectionstrategy.html" class="tsd-kind-icon">Error<wbr>Detection<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="genericerrordetectionstrategy.html" class="tsd-kind-icon">Generic<wbr>Error<wbr>Detection<wbr>Strategy</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="linearretrystrategy.html" class="tsd-kind-icon">Linear<wbr>Retry<wbr>Strategy</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="nofaultrecognizer.html" class="tsd-kind-icon">No<wbr>Fault<wbr>Recognizer</a>
+						<a href="noerrordetectionstrategy.html" class="tsd-kind-icon">No<wbr>Error<wbr>Detection<wbr>Strategy</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="retrypolicy.html" class="tsd-kind-icon">Retry<wbr>Policy</a>
