@@ -1,6 +1,6 @@
 import { ErrorDetectionStrategy } from '../ErrorDetectionStrategy';
 import { RetryState } from '../RetryState/RetryState';
-import { RetryStrategy } from '../RetryStrategy/RetryStrategy';
+import { RetryStrategy } from '../RetryStrategy';
 
 export class RetryPolicy {
   private $retryPromise: Promise<RetryState> = Promise.resolve(
@@ -52,13 +52,12 @@ export class RetryPolicy {
   }
 
   public handleRetryable(error: Error): Promise<RetryState | Error> {
-    const newState = this.retryState.addOneRetry();
-    if (!this.retryStrategy.isRetryAllowed(newState)) {
+    if (!this.retryStrategy.isRetryAllowed(this.retryState)) {
       return this.handleFatal(error);
     }
 
-    this.retryState = newState;
-    return (this.$retryPromise = this.makeRetryPromise(newState));
+    this.retryState = this.retryState.addOneRetry();
+    return (this.$retryPromise = this.makeRetryPromise(this.retryState));
   }
 
   public makeRetryPromise(retryState: RetryState): Promise<RetryState> {
