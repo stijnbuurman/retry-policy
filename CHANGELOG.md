@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/stijnbuurman/retry-policy/compare/v1.0.2...v1.0.4) (2018-05-02)
+### Bug fixes
+- add spec, .circleci and .idea to .npmignore
+
+### Added
+- npm package (@stinoz/retry-policy)
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/stijnbuurman/retry-policy/compare/v1.0.2...v1.0.3) (2018-04-30)
 - Added tests
