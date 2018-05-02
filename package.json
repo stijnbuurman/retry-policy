@@ -1,5 +1,5 @@
 {
-  "name": "retry-policy",
+  "name": "@stinoz/retry-policy",
   "version": "1.0.3",
   "description": "A retry policy framework for javascript",
   "main": "build/main/index.js",
