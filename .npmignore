@@ -4,10 +4,13 @@ tsconfig.json
 tsconfig.module.json
 tslint.json
 .travis.yml
+.circleci
 .github
 .prettierignore
 build/docs
 **/*.spec.*
+spec
+.idea
 coverage
 .nyc_output
 *.log
