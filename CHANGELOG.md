@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/stijnbuurman/retry-policy/compare/1.1.0...1.2.0) (2018-05-15)
+
+
+### Features
+
+* **paradigm:** Rewrite retry policy to be stateless and more functional ([d706481](https://github.com/stijnbuurman/retry-policy/commit/d706481))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/stijnbuurman/retry-policy/compare/v1.0.2...v1.1.0) (2018-05-03)
 
