@@ -6,10 +6,8 @@ export class SeriesRetryStrategy extends RetryStrategy {
   }
 
   public getTimeout(attemptNumber: number): number {
-    if (attemptNumber > this.delaySeries.length) {
-      throw new Error('No timeout for this attemptNumber.');
-    }
-
-    return this.delaySeries[attemptNumber - 1];
+    return attemptNumber > this.delaySeries.length
+      ? undefined
+      : this.delaySeries[attemptNumber - 1];
   }
 }

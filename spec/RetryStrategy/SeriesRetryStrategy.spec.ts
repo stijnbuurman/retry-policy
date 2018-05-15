@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import 'mocha';
-import { SeriesRetryStrategy } from '../../src/RetryStrategy/SeriesRetryStrategy';
+import { SeriesRetryStrategy } from '../../src/RetryStrategy';
 
-describe('Even Retry Strategy', () => {
+describe('Series Retry Strategy', () => {
   const seriesRetryStrategy = new SeriesRetryStrategy([10, 20, 40, 65]);
 
   it('should give a timeout of 10 on first try', () => {
@@ -21,9 +21,7 @@ describe('Even Retry Strategy', () => {
     assert.equal(seriesRetryStrategy.getTimeout(4), 65);
   });
 
-  it('should throw an error on 5th attempt', () => {
-    assert.throws(() => {
-      seriesRetryStrategy.getTimeout(5);
-    });
+  it('should be undefined on 5th attempt', () => {
+    assert.equal(seriesRetryStrategy.getTimeout(5), undefined);
   });
 });

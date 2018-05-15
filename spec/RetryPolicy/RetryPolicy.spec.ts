@@ -86,12 +86,21 @@ describe('RetryPolicy', () => {
 
     it('should modify state on retry', async () => {
       const errorDetectionStrategy = new AllErrorDetectionStrategy();
-      const strategy = new LinearRetryStrategy(10, 1);
+      const strategy = new LinearRetryStrategy(10);
       const retryPolicy = new RetryPolicy(strategy, [errorDetectionStrategy]);
 
-      return retryPolicy.handleRetryable(new Error()).then(() => {
-        assert.equal(retryPolicy.getState().getRetryCount(), 1);
-      });
+      return retryPolicy
+        .handleRetryable(new Error())
+        .then((retryState: RetryState) => {
+          assert.equal(retryState.getRetryCount(), 1);
+          return retryState;
+        })
+        .then((retryState: RetryState) => {
+          return retryPolicy.handleRetryable(new Error(), retryState);
+        })
+        .then((retryState: RetryState) => {
+          assert.equal(retryState.getRetryCount(), 2);
+        });
     });
 
     it('should not reject on fatal error', () => {
@@ -109,53 +118,6 @@ describe('RetryPolicy', () => {
       const retryPolicy = new RetryPolicy(strategy);
 
       return assert.isRejected(retryPolicy.handleFatal(new Error()));
-    });
-  });
-
-  describe('handleSuccess', () => {
-    it('should reset the state', async () => {
-      const strategy = new LinearRetryStrategy(10, 1);
-      const retryPolicy = new RetryPolicy(strategy);
-
-      await assert.isFulfilled(retryPolicy.handleError(new Error()));
-
-      assert.equal(retryPolicy.getState().getRetryCount(), 1);
-
-      retryPolicy.handleSuccess();
-
-      assert.equal(retryPolicy.getState().getRetryCount(), 0);
-    });
-  });
-
-  describe('makeRetryPromise', () => {
-    it('should return a promise that resolve after 300 ms', async () => {
-      const strategy = new LinearRetryStrategy(100, 1);
-      const retryPolicy = new RetryPolicy(strategy);
-
-      const startTime = Date.now();
-
-      const promise = retryPolicy.makeRetryPromise(new RetryState(3));
-      await assert.isFulfilled(promise);
-
-      const endTime = Date.now();
-
-      assert.isAtLeast(endTime, startTime + 100 * 3 - 5); // apparently there is a small chance it is less than 300ms
-      assert.isAtMost(endTime, startTime + 100 * 3 + 10); // minor diff maybe
-    });
-
-    it('should return a promise that resolve after 600 ms', async () => {
-      const strategy = new LinearRetryStrategy(50, 12);
-      const retryPolicy = new RetryPolicy(strategy);
-
-      const startTime = Date.now();
-
-      const promise = retryPolicy.makeRetryPromise(new RetryState(12));
-      await assert.isFulfilled(promise);
-
-      const endTime = Date.now();
-
-      assert.isAtLeast(endTime, startTime + 50 * 12 - 5); // apparently there is a small chance it is less than 600ms
-      assert.isAtMost(endTime, startTime + 50 * 12 + 10); // minor diff maybe
     });
   });
 });

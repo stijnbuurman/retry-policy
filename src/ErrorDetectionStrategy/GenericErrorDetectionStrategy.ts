@@ -8,14 +8,8 @@ export class GenericErrorDetectionStrategy extends ErrorDetectionStrategy {
   }
 
   public isRetryable(error: Error): boolean {
-    for (const retryableError of this.retryableErrors) {
-      if (error.name !== retryableError.name) {
-        continue;
-      }
-
-      return true;
-    }
-
-    return false;
+    return !!this.retryableErrors.find(errorClass => {
+      return error.name === errorClass.name;
+    });
   }
 }

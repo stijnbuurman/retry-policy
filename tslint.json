@@ -13,14 +13,16 @@
     "typedef": [true, "call-signature"],
 
     // Immutability rules
-    "readonly-keyword": false,
-    "readonly-array": false,
+    "readonly-keyword": true,
+    "readonly-array": true,
     "no-let": true,
-    "no-object-mutation": false,
+    "no-object-mutation": true,
     "no-delete": true,
+    "no-method-signature": true,
 
     // Functional style rules
-    "no-mixed-interface": true
+    "no-mixed-interface": true,
+    "no-if-statement": true
     /* end tslint-immutable rules */
   }
 }

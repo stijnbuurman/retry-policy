@@ -6,9 +6,8 @@ export abstract class RetryStrategy {
   public abstract getTimeout(attemptNumber: number): number;
 
   public isRetryAllowed(retryState: RetryState): boolean {
-    if (this.maxRetries < 0) {
-      return true;
-    }
-    return retryState.getRetryCount() < this.maxRetries;
+    return this.maxRetries < 0
+      ? true
+      : retryState.getRetryCount() < this.maxRetries;
   }
 }
