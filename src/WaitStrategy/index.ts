@@ -1,13 +1,11 @@
-import { EvenRetryStrategy } from './EvenRetryStrategy';
-import { ExponentialRetryStrategy } from './ExponentialRetryStrategy';
-import { LinearRetryStrategy } from './LinearRetryStrategy';
-import { RetryStrategy } from './RetryStrategy';
-import { SeriesRetryStrategy } from './SeriesRetryStrategy';
+import { exponentialWaitStrategy } from './ExponentialWaitStrategy';
+import { fixedWaitStrategy } from './FixedWaitStrategy';
+import { linearWaitStrategy } from './LinearWaitStrategy';
+import { seriesWaitStrategy } from './SeriesWaitStrategy';
 
 export {
-  EvenRetryStrategy,
-  ExponentialRetryStrategy,
-  LinearRetryStrategy,
-  RetryStrategy,
-  SeriesRetryStrategy
+  fixedWaitStrategy,
+  exponentialWaitStrategy,
+  linearWaitStrategy,
+  seriesWaitStrategy
 };

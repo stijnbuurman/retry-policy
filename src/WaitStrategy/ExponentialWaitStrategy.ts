@@ -1,5 +1,14 @@
-import {WaitStrategy} from "./WaitStrategy";
+import { WaitStrategy } from './WaitStrategy';
 
-export const waitExponentialStrategy: WaitStrategy = (options: {readonly timeout: number, readonly exponent: number} = {timeout: 100, exponent: 2}) => {
-  return (retryCount: number) => options.timeout * options.exponent ** (retryCount - 1);
-};
+export const exponentialWaitStrategy: WaitStrategy = (
+  {
+    exponent,
+    timeout
+  }: {
+    readonly timeout: number;
+    readonly exponent: number;
+  } = {
+    exponent: 2,
+    timeout: 100
+  }
+) => (retryCount: number) => timeout * exponent ** (retryCount - 1);

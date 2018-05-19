@@ -1,21 +1,21 @@
 import { assert } from 'chai';
 import 'mocha';
-import { GenericErrorDetectionStrategy } from '../../src/ErrorDetectionStrategy';
+import { genericErrorDetectionStrategy } from '../../src/ErrorDetectionStrategy';
 
 describe('Generic Error Detection Strategy', () => {
   it('should recognize an error if set', () => {
-    const errorDetectionStrategy = new GenericErrorDetectionStrategy([
-      RangeError
-    ]);
+    const isRetryable = genericErrorDetectionStrategy({
+      errors: [RangeError]
+    });
 
-    assert.isTrue(errorDetectionStrategy.isRetryable(new RangeError()));
+    assert.isTrue(isRetryable(new RangeError()));
   });
 
   it('should not recognize an error if not set', () => {
-    const errorDetectionStrategy = new GenericErrorDetectionStrategy([
-      RangeError
-    ]);
+    const isRetryable = genericErrorDetectionStrategy({
+      errors: [RangeError]
+    });
 
-    assert.isFalse(errorDetectionStrategy.isRetryable(new EvalError()));
+    assert.isFalse(isRetryable(new EvalError()));
   });
 });

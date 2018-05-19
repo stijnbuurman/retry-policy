@@ -1,7 +1,5 @@
 import { ErrorDetectionStrategy } from './ErrorDetectionStrategy';
 
-export class AllErrorDetectionStrategy extends ErrorDetectionStrategy {
-  public isRetryable(error: Error): boolean {
-    return true;
-  }
-}
+export const allErrorDetectionStrategy: ErrorDetectionStrategy = () => {
+  return () => true;
+};

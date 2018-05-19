@@ -1,5 +1,7 @@
-import {WaitStrategy} from "./WaitStrategy";
+import { WaitStrategy } from './WaitStrategy';
 
-export const fixedWaitStrategy: WaitStrategy = (options: {readonly timeout: number}) => {
-  return () => 'timeout' in options ? options.timeout : 0;
+export const fixedWaitStrategy: WaitStrategy = (
+  { timeout }: { readonly timeout: number } = { timeout: 100 }
+) => {
+  return () => timeout;
 };

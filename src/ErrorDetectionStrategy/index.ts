@@ -1,11 +1,11 @@
-import { AllErrorDetectionStrategy } from './AllErrorDetectionStrategy';
+import { allErrorDetectionStrategy } from './AllErrorDetectionStrategy';
 import { ErrorDetectionStrategy } from './ErrorDetectionStrategy';
-import { GenericErrorDetectionStrategy } from './GenericErrorDetectionStrategy';
-import { NoErrorDetectionStrategy } from './NoErrorDetectionStrategy';
+import { genericErrorDetectionStrategy } from './GenericErrorDetectionStrategy';
+import { noErrorDetectionStrategy } from './NoErrorDetectionStrategy';
 
 export {
-  AllErrorDetectionStrategy,
+  allErrorDetectionStrategy,
   ErrorDetectionStrategy,
-  GenericErrorDetectionStrategy,
-  NoErrorDetectionStrategy
+  genericErrorDetectionStrategy,
+  noErrorDetectionStrategy
 };
