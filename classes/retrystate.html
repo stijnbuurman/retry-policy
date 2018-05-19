@@ -87,6 +87,7 @@
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="retrystate.html#lasterror" class="tsd-kind-icon">last<wbr>Error</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="retrystate.html#retrycount" class="tsd-kind-icon">retry<wbr>Count</a></li>
 							</ul>
 						</section>
@@ -94,6 +95,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="retrystate.html#addoneretry" class="tsd-kind-icon">add<wbr>One<wbr>Retry</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="retrystate.html#getlasterror" class="tsd-kind-icon">get<wbr>Last<wbr>Error</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="retrystate.html#getretrycount" class="tsd-kind-icon">get<wbr>Retry<wbr>Count</a></li>
 							</ul>
 						</section>
@@ -106,19 +108,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Retry<wbr>State<span class="tsd-signature-symbol">(</span>retryCount<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="retrystate.html" class="tsd-signature-type">RetryState</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Retry<wbr>State<span class="tsd-signature-symbol">(</span>retryCount<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, lastError<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="retrystate.html" class="tsd-signature-type">RetryState</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d706481/src/RetryState/RetryState.ts#L1">RetryState/RetryState.ts:1</a></li>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d35c498/src/RetryState/RetryState.ts#L1">RetryState/RetryState.ts:1</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> retryCount: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> lastError: <span class="tsd-signature-type">Error</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="retrystate.html" class="tsd-signature-type">RetryState</a></h4>
@@ -129,12 +134,22 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="lasterror" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagOptional">Optional</span> last<wbr>Error</h3>
+					<div class="tsd-signature tsd-kind-icon">last<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Error</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d35c498/src/RetryState/RetryState.ts#L2">RetryState/RetryState.ts:2</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="retrycount" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> retry<wbr>Count</h3>
 					<div class="tsd-signature tsd-kind-icon">retry<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d706481/src/RetryState/RetryState.ts#L2">RetryState/RetryState.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d35c498/src/RetryState/RetryState.ts#L2">RetryState/RetryState.ts:2</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -145,16 +160,39 @@
 					<a name="addoneretry" class="tsd-anchor"></a>
 					<h3>add<wbr>One<wbr>Retry</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>One<wbr>Retry<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="retrystate.html" class="tsd-signature-type">RetryState</a></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>One<wbr>Retry<span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="retrystate.html" class="tsd-signature-type">RetryState</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d706481/src/RetryState/RetryState.ts#L8">RetryState/RetryState.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d35c498/src/RetryState/RetryState.ts#L12">RetryState/RetryState.ts:12</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>error: <span class="tsd-signature-type">Error</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="retrystate.html" class="tsd-signature-type">RetryState</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getlasterror" class="tsd-anchor"></a>
+					<h3>get<wbr>Last<wbr>Error</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Last<wbr>Error<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d35c498/src/RetryState/RetryState.ts#L8">RetryState/RetryState.ts:8</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Error</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -168,7 +206,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d706481/src/RetryState/RetryState.ts#L4">RetryState/RetryState.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/stijnbuurman/retry-policy/blob/d35c498/src/RetryState/RetryState.ts#L4">RetryState/RetryState.ts:4</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -187,30 +225,6 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="allerrordetectionstrategy.html" class="tsd-kind-icon">All<wbr>Error<wbr>Detection<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="errordetectionstrategy.html" class="tsd-kind-icon">Error<wbr>Detection<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="evenretrystrategy.html" class="tsd-kind-icon">Even<wbr>Retry<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="exponentialretrystrategy.html" class="tsd-kind-icon">Exponential<wbr>Retry<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="genericerrordetectionstrategy.html" class="tsd-kind-icon">Generic<wbr>Error<wbr>Detection<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="linearretrystrategy.html" class="tsd-kind-icon">Linear<wbr>Retry<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="noerrordetectionstrategy.html" class="tsd-kind-icon">No<wbr>Error<wbr>Detection<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="retrypolicy.html" class="tsd-kind-icon">Retry<wbr>Policy</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
@@ -220,10 +234,16 @@
 								<a href="retrystate.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="retrystate.html#lasterror" class="tsd-kind-icon">last<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="retrystate.html#retrycount" class="tsd-kind-icon">retry<wbr>Count</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="retrystate.html#addoneretry" class="tsd-kind-icon">add<wbr>One<wbr>Retry</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="retrystate.html#getlasterror" class="tsd-kind-icon">get<wbr>Last<wbr>Error</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="retrystate.html#getretrycount" class="tsd-kind-icon">get<wbr>Retry<wbr>Count</a>
@@ -232,17 +252,59 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="retrystrategy.html" class="tsd-kind-icon">Retry<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="seriesretrystrategy.html" class="tsd-kind-icon">Series<wbr>Retry<wbr>Strategy</a>
-					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#errorclass" class="tsd-kind-icon">Error<wbr>Class</a>
 					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#errordetectionstrategy" class="tsd-kind-icon">Error<wbr>Detection<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#getwaittime" class="tsd-kind-icon">Get<wbr>Wait<wbr>Time</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#isretryable" class="tsd-kind-icon">Is<wbr>Retryable</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#isstopped" class="tsd-kind-icon">Is<wbr>Stopped</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#stopstrategy" class="tsd-kind-icon">Stop<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#waitstrategy" class="tsd-kind-icon">Wait<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#retrypolicy" class="tsd-kind-icon">Retry<wbr>Policy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#afterattemptstopstrategy" class="tsd-kind-icon">after<wbr>Attempt<wbr>Stop<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#allerrordetectionstrategy" class="tsd-kind-icon">all<wbr>Error<wbr>Detection<wbr>Strategy</a>
+					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#delaywithpass" class="tsd-kind-icon">delay<wbr>With<wbr>Pass</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#exponentialwaitstrategy" class="tsd-kind-icon">exponential<wbr>Wait<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#fixedwaitstrategy" class="tsd-kind-icon">fixed<wbr>Wait<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#genericerrordetectionstrategy" class="tsd-kind-icon">generic<wbr>Error<wbr>Detection<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#linearwaitstrategy" class="tsd-kind-icon">linear<wbr>Wait<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#neverstopstrategy" class="tsd-kind-icon">never<wbr>Stop<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#noerrordetectionstrategy" class="tsd-kind-icon">no<wbr>Error<wbr>Detection<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#serieswaitstrategy" class="tsd-kind-icon">series<wbr>Wait<wbr>Strategy</a>
 					</li>
 				</ul>
 			</nav>
