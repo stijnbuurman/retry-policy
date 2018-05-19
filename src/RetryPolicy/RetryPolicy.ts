@@ -34,7 +34,7 @@ export class RetryPolicy {
     retryState: RetryState = new RetryState(0)
   ): Promise<RetryState | Error> {
     return this.retryStrategy.isRetryAllowed(retryState)
-      ? this.makeRetryPromise(retryState.addOneRetry())
+      ? this.makeRetryPromise(retryState.addOneRetry(error))
       : this.handleFatal(error);
   }
 
