@@ -3,13 +3,13 @@
 
 # retry-policy
 
-A retry library for more resilient code.
+This library tries to help with making applications tolerant for temporary errors.
 
 ## Features
-- Retry actions using multiple WaitStrategies
-- Seperate StopStrategy
-- Filter retryable errors using ErrorDetectionStrategies
-- Easily customizable
+- Use waitStrategies to specify timeouts between retries
+- Use stopStrategies to specify number of attempts
+- Use errorDetectionStrategies to recognize retryable errors
+- Easily make your own strategies
 - Written in Typescript
 - Has an interceptor for Axios! ([axios-retry-policy](https://github.com/stijnbuurman/axios-retry-policy))
 
@@ -20,28 +20,47 @@ npm install @stinoz/retry-policy
 
 ## Example
 ```javascript
-// Build the retry policy
+// import RetryPolicy and strategies 
 const {
     afterAttemptStopStrategy,
     exponentialWaitStrategy,
-    genericErrorDetectionStrategy,
     RetryPolicy} = require('@stinoz/retry-policy');
   
+// Build the retry policy  
 const retryPolicy = RetryPolicy({
-    stopStrategy: afterAttemptStopStrategy({
-        attempts: 5
-    }),
-    waitStrategy: exponentialWaitStrategy({
-        timeout: 500,
-        exponent: 2
-    }),
-    errorDetectionStrategies: [
-        genericErrorDetectionStrategy({
-            errors: [RangeError],
-        }
-    )],
+    stopStrategy: afterAttemptStopStrategy({attempts: 5}),
+    waitStrategy: exponentialWaitStrategy({timeout: 500}),
 });
   
+// execute the unreliable action
+retryPolicy.execute(() => {
+    return unreliableAction();
+});
+
+```
+
+## API
+
+### RetryPolicy
+The retry policy is responsible for executing retryable actions. Currently it only supports promise based actions (which should be easy to work around)
+
+#### Make a new RetryPolicy
+All parameters can be ommited.
+ 
+These are the defaults:
+```javascript
+const retryPolicy = RetryPolicy({
+    stopStrategy: neverStopStrategy(),
+    waitStrategy: linearWaitStrategy({timeout: 100, slope: 100}),
+    errorDetectionStrategies = [allErrorDetectionStrategy()],
+});
+```
+
+#### Execute an action
+Make sure to return the promise. 
+All data of this promise will be passed in case it succeeds. 
+In case it fails the last error will be passed unmodified. 
+```javascript
 // execute the unreliable action
 retryPolicy.execute(() => {
     return unreliableAction();
@@ -60,31 +79,6 @@ retryPolicy.execute(() => {
       
     console.error('failed', lastError);
 });
-
-```
-
-## API
-
-### RetryPolicy
-The retry policy is responsible for executing retryable actions. Currently it only supports promise based actions (which should be easy to work around)
-
-#### Make a new RetryPolicy
-```
-const retryPolicy = RetryPolicy({
-    stopStrategy,
-    waitStrategy,
-    errorDetectionStrategies,
-});
-```
-
-#### Execute an action
-Make sure to return the promise. 
-All data of this promise will be passed in case it succeeds. 
-In case it fails the last error will be passed unmodified. 
-```
-retryPolicy.execute(() => {
-    return unreliableAction();
-})
 ```
 
 
@@ -93,7 +87,7 @@ retryPolicy.execute(() => {
 
 #### Fixed  (default)
 This strategy keeps it simple and always uses the same timout.
-```
+```javascript
 const retryPolicy = RetryPolicy({
     waitStrategy: fixedWaitStrategy({
         timeout: 100
@@ -103,7 +97,7 @@ const retryPolicy = RetryPolicy({
 
 #### Linear 
 This strategy increases its timeout steady: e.g. 200, 400, 600
-```
+```javascript
 const retryPolicy = RetryPolicy({
     waitStrategy: linearWaitStrategy({
         timeout: 100, 
@@ -114,7 +108,7 @@ const retryPolicy = RetryPolicy({
 
 #### Exponential 
 This strategy increases its timeout exponentially: e.g. 200, 400, 800
-```
+```javascript
 const retryPolicy = RetryPolicy({
     waitStrategy: exponentialWaitStrategy({
         timeout: 100, 
@@ -129,10 +123,10 @@ const retryPolicy = RetryPolicy({
 
 Pass an array with timeouts which will be used in order.
 
-```
+```javascript
 const retryPolicy = RetryPolicy({
     waitStrategy: seriesWaitStrategy({
-        delays: [100, 200, 600, 3000
+        delays: [100, 200, 600, 3000],
     }),
 });
 ```
@@ -142,7 +136,7 @@ const retryPolicy = RetryPolicy({
 
 In case you need to base your retry time on Retry-After headers, you can use the lastError.
 
-```
+```javascript
 const retryPolicy = RetryPolicy({
     waitStrategy: (retryCount, lastError) => retryCount * 100 + Math.PI
 });
@@ -212,6 +206,20 @@ const retryPolicy = RetryPolicy({
     errorDetectionStrategies: [
         (error) => error.message === 'My Retryable Error'
     ],
+});
+```
+
+### Custom strategy with parameters
+When you want to make your own strategy that accepts parameters you can use this method:
+```javascript
+const myWaitStrategy = (paramA) {
+    return (retryCount) {
+        return 500 * retryCount + paramA;
+    }
+}
+  
+const retryPolicy = RetryPolicy({
+    waitStrategy: myWaitStrategy(5000),
 });
 ```
 
