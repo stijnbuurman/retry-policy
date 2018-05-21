@@ -55,8 +55,7 @@
   "engines": {
     "node": ">=8.9"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "codecov": "^3.0.0",
     "cz-conventional-changelog": "^2.1.0",
