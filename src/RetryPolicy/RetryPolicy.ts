@@ -1,7 +1,10 @@
 import { RetryState } from '../';
-import { allErrorDetectionStrategy, IsRetryable } from '../ErrorDetectionStrategy';
+import {
+  allErrorDetectionStrategy,
+  IsRetryable
+} from '../ErrorDetectionStrategy';
 import { delayWithPass } from '../helpers/helpers';
-import { IsStopped, neverStopStrategy} from '../StopStrategy';
+import { IsStopped, neverStopStrategy } from '../StopStrategy';
 import { GetWaitTime, linearWaitStrategy } from '../WaitStrategy';
 
 export const RetryPolicy = ({
@@ -26,13 +29,31 @@ export const RetryPolicy = ({
     return Promise.reject(error);
   }
 
-  return (
+  function handleError(
     error: Error,
     retryState: RetryState = new RetryState()
-  ): Promise<RetryState | Error> => {
+  ): Promise<RetryState | Error> {
     return errorDetectionStrategies.some(isRetryable => isRetryable(error)) &&
       !stopStrategy(retryState.getRetryCount())
       ? handleRetryable(error, retryState)
       : handleFatal(error);
+  }
+
+  function executeAsync<T>(
+    action: (...args) => Promise<any>,
+    retryState: RetryState = new RetryState()
+  ): Promise<T> {
+    return action().catch(error => {
+      return handleError(error, retryState).then(
+        (newRetryState: RetryState) => {
+          return executeAsync(action, newRetryState);
+        }
+      );
+    });
+  }
+
+  return {
+    execute: executeAsync,
+    handleError
   };
 };
