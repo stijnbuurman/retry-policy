@@ -2,14 +2,14 @@ import { RetryState } from '../';
 import { allErrorDetectionStrategy } from '../ErrorDetectionStrategy';
 import { IsRetryable } from '../ErrorDetectionStrategy/ErrorDetectionStrategy';
 import { delayWithPass } from '../helpers/helpers';
-import { afterAttemptStopStrategy } from '../StopStrategy';
+import { neverStopStrategy} from '../StopStrategy';
 import { IsStopped } from '../StopStrategy/StopStrategy';
 import { linearWaitStrategy } from '../WaitStrategy';
 import { GetWaitTime } from '../WaitStrategy/WaitStrategy';
 
 export const RetryPolicy = ({
   errorDetectionStrategies = [allErrorDetectionStrategy()],
-  stopStrategy = afterAttemptStopStrategy(),
+  stopStrategy = neverStopStrategy(),
   waitStrategy = linearWaitStrategy()
 }: {
   readonly errorDetectionStrategies?: ReadonlyArray<IsRetryable>;
