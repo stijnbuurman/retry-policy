@@ -15,7 +15,7 @@ export const RetryPolicy = ({
   readonly errorDetectionStrategies?: ReadonlyArray<IsRetryable>;
   readonly stopStrategy?: IsStopped;
   readonly waitStrategy?: GetWaitTime;
-}) => {
+} = {}) => {
   function handleRetryable(
     error: Error,
     retryState: RetryState
