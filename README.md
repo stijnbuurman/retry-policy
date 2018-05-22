@@ -52,7 +52,7 @@ These are the defaults:
 const retryPolicy = RetryPolicy({
     stopStrategy: neverStopStrategy(),
     waitStrategy: linearWaitStrategy({timeout: 100, slope: 100}),
-    errorDetectionStrategies = [allErrorDetectionStrategy()],
+    errorDetectionStrategies: [allErrorDetectionStrategy()],
 });
 ```
 
