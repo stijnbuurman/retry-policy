@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/stijnbuurman/retry-policy/compare/1.4.3...1.5.0) (2018-05-23)
+
+
+### Bug Fixes
+
+* **defaults:** Make NeverStop the default StopStrategy ([585dbc0](https://github.com/stijnbuurman/retry-policy/commit/585dbc0))
+* Add default to RetryPolicy options object. ([54c566f](https://github.com/stijnbuurman/retry-policy/commit/54c566f))
+* Fix the way defaults in strategies are defined ([5f22681](https://github.com/stijnbuurman/retry-policy/commit/5f22681))
+
+
+### Features
+
+* Add RetryPolicy.execute to make it easier to use ([25fdff8](https://github.com/stijnbuurman/retry-policy/commit/25fdff8))
+
+
+
 <a name="1.4.3"></a>
 ## [1.4.3](https://github.com/stijnbuurman/retry-policy/compare/v1.2.0...v1.4.3) (2018-05-20)
 
