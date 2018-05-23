@@ -18,4 +18,12 @@ describe('Generic Error Detection Strategy', () => {
 
     assert.isFalse(isRetryable(new EvalError()));
   });
+
+  it('should not recognize any error if no options are passed', () => {
+    const isRetryable = genericErrorDetectionStrategy();
+
+    assert.isFalse(isRetryable(new EvalError()));
+    assert.isFalse(isRetryable(new RangeError()));
+    assert.isFalse(isRetryable(new Error()));
+  });
 });

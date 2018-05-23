@@ -14,7 +14,7 @@ const assert = chai.assert;
 
 describe('RetryPolicy - HandleError', () => {
   describe('Retryable errors', () => {
-    const retryPolicy = RetryPolicy({});
+    const retryPolicy = RetryPolicy();
 
     it('should resolve on a retryable error', () => {
       return assert.isFulfilled(retryPolicy.handleError(new Error()));
@@ -91,14 +91,30 @@ describe('RetryPolicy - Execute', () => {
 
     it('should resolve on not an error', () => {
       return assert.isFulfilled(
-        retryPolicy.execute(() => Promise.resolve(true))
+        retryPolicy
+          .execute(() => Promise.resolve(true))
+          .then((value: boolean) => {
+            assert.isTrue(value);
+          })
       );
     });
 
     it('should reject on a non retryable error', () => {
-      return assert.isRejected(
-        retryPolicy.execute(() => Promise.reject(new Error()))
+      const promise = retryPolicy.execute(() =>
+        Promise.reject(new Error('Test'))
       );
+
+      return promise.catch((error: Error) => {
+        assert.equal(error.message, 'Test');
+      });
+    });
+
+    it('should reject on a retryable error because stop limit is reached', () => {
+      const promise = retryPolicy.execute(() => {
+        return Promise.reject(new RangeError());
+      }, new RetryState(3));
+
+      return assert.isRejected(promise);
     });
   });
 });
