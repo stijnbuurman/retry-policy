@@ -1,2 +1,4 @@
-export type StopStrategyBuilder = (options?: {}) => StopStrategy;
+export type StopStrategyBuilder = (
+  options?: Record<string, unknown>
+) => StopStrategy;
 export type StopStrategy = (retryCount: number) => boolean;

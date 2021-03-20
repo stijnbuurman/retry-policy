@@ -1,115 +1,123 @@
-import {ErrorDetectionStrategy, RetryPolicy, StopStrategy, WaitStrategy} from '../../src';
+import {
+  ErrorDetectionStrategy,
+  RetryPolicy,
+  StopStrategy,
+  WaitStrategy,
+} from '../../src';
 
 import sinon from 'sinon';
 import * as chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import 'mocha';
 
-
 chai.use(chaiAsPromised);
 const assert = chai.assert;
 
 describe('RetryPolicy', () => {
-    const MOCK_RESULT = Symbol('MOCK_RESULT');
-    const MOCK_ERROR = new Error('MOCK ERROR');
+  const MOCK_RESULT = Symbol('MOCK_RESULT');
+  const MOCK_ERROR = new Error('MOCK ERROR');
 
-    let retryPolicy: RetryPolicy;
-    let errorDetectionStrategy: sinon.SinonStub;
-    let stopStrategy: sinon.SinonStub;
-    let waitStrategy: sinon.SinonStub;
+  let retryPolicy: RetryPolicy;
+  let errorDetectionStrategy: sinon.SinonStub;
+  let stopStrategy: sinon.SinonStub;
+  let waitStrategy: sinon.SinonStub;
 
-    beforeEach(() => {
-        errorDetectionStrategy = sinon.stub();
-        stopStrategy = sinon.stub();
-        waitStrategy = sinon.stub().returns(0);
+  beforeEach(() => {
+    errorDetectionStrategy = sinon.stub();
+    stopStrategy = sinon.stub();
+    waitStrategy = sinon.stub().returns(0);
 
-        retryPolicy = new RetryPolicy({
-            errorDetectionStrategies: [
-                errorDetectionStrategy as ErrorDetectionStrategy
-            ],
-            stopStrategy: stopStrategy as StopStrategy,
-            waitStrategy: waitStrategy as WaitStrategy,
-        });
-    })
-
-    it('Should return on successful execution', async () => {
-        const action = sinon.stub().resolves(MOCK_RESULT);
-
-        stopStrategy.returns(false);
-        errorDetectionStrategy.returns(true);
-
-        const result = await retryPolicy.execute(action);
-
-        sinon.assert.calledOnce(action);
-        assert.equal(result, MOCK_RESULT);
+    retryPolicy = new RetryPolicy({
+      errorDetectionStrategies: [
+        errorDetectionStrategy as ErrorDetectionStrategy,
+      ],
+      stopStrategy: stopStrategy as StopStrategy,
+      waitStrategy: waitStrategy as WaitStrategy,
     });
+  });
 
-    it('should reject on a non retryable error', () => {
-        const action = sinon.stub().rejects(MOCK_ERROR);
+  it('Should return on successful execution', async () => {
+    const action = sinon.stub().resolves(MOCK_RESULT);
 
-        stopStrategy.returns(false);
-        errorDetectionStrategy.returns(false);
+    stopStrategy.returns(false);
+    errorDetectionStrategy.returns(true);
 
-        assert.isRejected(retryPolicy.execute(action));
+    const result = await retryPolicy.execute(action);
 
-        sinon.assert.calledOnce(action);
-    });
+    sinon.assert.calledOnce(action);
+    assert.equal(result, MOCK_RESULT);
+  });
 
-    it('should retry on a retryable error', async () => {
-        const action = sinon.stub()
-            .onFirstCall().rejects(MOCK_ERROR)
-            .onSecondCall().resolves(MOCK_RESULT);
+  it('should reject on a non retryable error', async () => {
+    const action = sinon.stub().rejects(MOCK_ERROR);
 
-        stopStrategy.returns(false);
-        errorDetectionStrategy.returns(true);
+    stopStrategy.returns(false);
+    errorDetectionStrategy.returns(false);
 
-        let executePromise = retryPolicy.execute(action);
-        assert.isFulfilled(executePromise);
+    await assert.isRejected(retryPolicy.execute(action));
 
-        assert.equal(await executePromise, MOCK_RESULT);
+    sinon.assert.calledOnce(action);
+  });
 
-        sinon.assert.calledTwice(action);
-    });
+  it('should retry on a retryable error', async () => {
+    const action = sinon
+      .stub()
+      .onFirstCall()
+      .rejects(MOCK_ERROR)
+      .onSecondCall()
+      .resolves(MOCK_RESULT);
 
-    it('should stop when stop limit is reached', async () => {
-        const action = sinon.stub().rejects(MOCK_ERROR);
+    stopStrategy.returns(false);
+    errorDetectionStrategy.returns(true);
 
-        stopStrategy
-            .onFirstCall().returns(false)
-            .onSecondCall().returns(true);
+    const executePromise = retryPolicy.execute(action);
+    await assert.isFulfilled(executePromise);
 
-        errorDetectionStrategy.returns(true);
+    assert.equal(await executePromise, MOCK_RESULT);
 
-        let executePromise = retryPolicy.execute(action);
-        let errorPromise = executePromise.catch((error) => error);
-        assert.isRejected(executePromise);
+    sinon.assert.calledTwice(action);
+  });
 
-        assert.equal(await errorPromise, MOCK_ERROR);
+  it('should stop when stop limit is reached', async () => {
+    const action = sinon.stub().rejects(MOCK_ERROR);
 
-        sinon.assert.calledTwice(action);
-    });
+    stopStrategy.onFirstCall().returns(false).onSecondCall().returns(true);
 
-    it('should stop when an undefined wait time is received', async () => {
-        const action = sinon.stub()
-            .onFirstCall().rejects(MOCK_ERROR)
-            .onSecondCall().resolves(MOCK_RESULT);
+    errorDetectionStrategy.returns(true);
 
-        stopStrategy.returns(false);
-        errorDetectionStrategy.returns(true);
-        waitStrategy.returns(undefined);
+    const executePromise = retryPolicy.execute(action);
+    const errorPromise = await executePromise.catch((error: Error) => error);
+    await assert.isRejected(executePromise);
 
-        assert.isRejected(retryPolicy.execute(action));
-        sinon.assert.calledOnce(action);
-    });
+    assert.equal(errorPromise, MOCK_ERROR);
 
-    it('should have defaults set', async () => {
-        retryPolicy = new RetryPolicy();
+    sinon.assert.calledTwice(action);
+  });
 
-        // never stop
-        assert.equal(retryPolicy.stopStrategy(Infinity), false);
-        // all errors
-        assert.equal(retryPolicy.errorDetectionStrategies[0](MOCK_ERROR), true);
-        // no wait
-        assert.equal(retryPolicy.waitStrategy(Infinity), 0);
-    });
+  it('should stop when an undefined wait time is received', async () => {
+    const action = sinon
+      .stub()
+      .onFirstCall()
+      .rejects(MOCK_ERROR)
+      .onSecondCall()
+      .resolves(MOCK_RESULT);
+
+    stopStrategy.returns(false);
+    errorDetectionStrategy.returns(true);
+    waitStrategy.returns(undefined);
+
+    await assert.isRejected(retryPolicy.execute(action));
+    sinon.assert.calledOnce(action);
+  });
+
+  it('should have defaults set', () => {
+    retryPolicy = new RetryPolicy();
+
+    // never stop
+    assert.equal(retryPolicy.stopStrategy(Infinity), false);
+    // all errors
+    assert.equal(retryPolicy.errorDetectionStrategies[0](MOCK_ERROR), true);
+    // no wait
+    assert.equal(retryPolicy.waitStrategy(Infinity), 0);
+  });
 });

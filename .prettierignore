@@ -1,4 +1,4 @@
 # package.json is formatted by package managers, so we ignore it here
 package.json
 src/**/*.d.ts
-spec/**/*.d.ts
+spec/**/*.d.tsx

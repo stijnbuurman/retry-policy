@@ -4,7 +4,7 @@
  * Promise.resolve().then(delayWithPass(5000)).then(...)
  */
 export function delayWithPass<T>(delayTime: number): (x: T) => Promise<T> {
-    return (x: T) => {
-        return new Promise((resolve) => setTimeout(() => resolve(x), delayTime));
-    };
+  return (x: T) => {
+    return new Promise((resolve) => setTimeout(() => resolve(x), delayTime));
+  };
 }
