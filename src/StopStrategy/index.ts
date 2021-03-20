@@ -1,5 +1,5 @@
-import { afterAttemptStopStrategy } from './AfterAttemptStopStrategy';
-import { neverStopStrategy } from './NeverStopStrategy';
-import { IsStopped, StopStrategy } from './StopStrategy';
+import {afterAttemptStopStrategy} from './AfterAttemptStopStrategy';
+import {neverStopStrategy} from './NeverStopStrategy';
+import type {StopStrategy, StopStrategyBuilder} from './StopStrategyBuilder';
 
-export { afterAttemptStopStrategy, neverStopStrategy, IsStopped, StopStrategy };
+export {afterAttemptStopStrategy, neverStopStrategy, StopStrategy, StopStrategyBuilder};

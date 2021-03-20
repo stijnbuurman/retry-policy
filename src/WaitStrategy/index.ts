@@ -1,14 +1,14 @@
-import { exponentialWaitStrategy } from './ExponentialWaitStrategy';
-import { fixedWaitStrategy } from './FixedWaitStrategy';
-import { linearWaitStrategy } from './LinearWaitStrategy';
-import { seriesWaitStrategy } from './SeriesWaitStrategy';
-import { GetWaitTime, WaitStrategy } from './WaitStrategy';
+import {exponentialWaitStrategy} from './ExponentialWaitStrategy';
+import {fixedWaitStrategy} from './FixedWaitStrategy';
+import {linearWaitStrategy} from './LinearWaitStrategy';
+import {seriesWaitStrategy} from './SeriesWaitStrategy';
+import type {WaitStrategy, WaitStrategyBuilder} from './WaitStrategyBuilder';
 
 export {
-  fixedWaitStrategy,
-  exponentialWaitStrategy,
-  linearWaitStrategy,
-  seriesWaitStrategy,
-  GetWaitTime,
-  WaitStrategy
+    fixedWaitStrategy,
+    exponentialWaitStrategy,
+    linearWaitStrategy,
+    seriesWaitStrategy,
+    WaitStrategy,
+    WaitStrategyBuilder,
 };

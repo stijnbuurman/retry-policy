@@ -3,8 +3,8 @@
  * This can be used to chain between .then's like:
  * Promise.resolve().then(delayWithPass(5000)).then(...)
  */
-export function delayWithPass(delayTime: number): (x: any) => Promise<any> {
-  return (x: any) => {
-    return new Promise(resolve => setTimeout(() => resolve(x), delayTime));
-  };
+export function delayWithPass<T>(delayTime: number): (x: T) => Promise<T> {
+    return (x: T) => {
+        return new Promise((resolve) => setTimeout(() => resolve(x), delayTime));
+    };
 }

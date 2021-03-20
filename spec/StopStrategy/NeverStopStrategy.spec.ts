@@ -1,15 +1,15 @@
-import { assert } from 'chai';
+import {assert} from 'chai';
 import 'mocha';
-import { neverStopStrategy } from '../../src/StopStrategy';
+import {neverStopStrategy, StopStrategy} from '../../src/StopStrategy';
 
 describe('Never Stop Strategy', () => {
-  const isStopped = neverStopStrategy();
+    const strategy: StopStrategy = neverStopStrategy();
 
-  it('should give false on 1st try', () => {
-    assert.equal(isStopped(1), false);
-  });
+    it('should give false on 1st try', () => {
+        assert.equal(strategy(1), false);
+    });
 
-  it('should give false on MAX_VALUE', () => {
-    assert.equal(isStopped(Number.MAX_VALUE), false);
-  });
+    it('should give false on MAX_VALUE', () => {
+        assert.equal(strategy(Number.MAX_VALUE), false);
+    });
 });

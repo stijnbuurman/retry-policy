@@ -1,5 +1,5 @@
-import { StopStrategy } from './StopStrategy';
+import type {StopStrategyBuilder} from './StopStrategyBuilder';
 
-export const neverStopStrategy: StopStrategy = () => {
-  return () => false;
+export const neverStopStrategy: StopStrategyBuilder = () => {
+    return () => false;
 };

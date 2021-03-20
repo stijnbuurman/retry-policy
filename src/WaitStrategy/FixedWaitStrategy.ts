@@ -1,7 +1,8 @@
-import { WaitStrategy } from './WaitStrategy';
+import type {WaitStrategyBuilder} from './WaitStrategyBuilder';
 
-export const fixedWaitStrategy: WaitStrategy = ({
-  timeout = 100
-}: { readonly timeout?: number } = {}) => {
-  return () => timeout;
-};
+export const fixedWaitStrategy: WaitStrategyBuilder =
+    ({
+         timeout = 100,
+     }: { readonly timeout?: number } = {}) => {
+        return () => timeout;
+    };

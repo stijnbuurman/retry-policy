@@ -1,15 +1,19 @@
 export class RetryState {
-  constructor(private retryCount: number = 0, private lastError?: Error) {}
+    constructor(
+        private readonly retryCount: number = 0,
+        private readonly lastError?: Error
+    ) {
+    }
 
-  public getRetryCount(): number {
-    return this.retryCount;
-  }
+    public getRetryCount(): number {
+        return this.retryCount;
+    }
 
-  public getLastError(): Error {
-    return this.lastError;
-  }
+    public getLastError(): Error | undefined {
+        return this.lastError;
+    }
 
-  public addOneRetry(error: Error): RetryState {
-    return new RetryState(this.retryCount + 1, error);
-  }
+    public addOneRetry(error: Error): RetryState {
+        return new RetryState(this.retryCount + 1, error);
+    }
 }

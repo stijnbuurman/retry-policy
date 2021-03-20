@@ -27,7 +27,7 @@ const {
     RetryPolicy} = require('@stinoz/retry-policy');
   
 // Build the retry policy  
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     stopStrategy: afterAttemptStopStrategy({attempts: 5}),
     waitStrategy: exponentialWaitStrategy({timeout: 500}),
 });
@@ -49,7 +49,7 @@ All parameters can be ommited.
  
 These are the defaults:
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     stopStrategy: neverStopStrategy(),
     waitStrategy: linearWaitStrategy({timeout: 100, slope: 100}),
     errorDetectionStrategies: [allErrorDetectionStrategy()],
@@ -88,7 +88,7 @@ retryPolicy.execute(() => {
 #### Fixed  (default)
 This strategy keeps it simple and always uses the same timout.
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     waitStrategy: fixedWaitStrategy({
         timeout: 100
     }),
@@ -98,7 +98,7 @@ const retryPolicy = RetryPolicy({
 #### Linear 
 This strategy increases its timeout steady: e.g. 200, 400, 600
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     waitStrategy: linearWaitStrategy({
         timeout: 100, 
         slope: 1
@@ -109,7 +109,7 @@ const retryPolicy = RetryPolicy({
 #### Exponential 
 This strategy increases its timeout exponentially: e.g. 200, 400, 800
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     waitStrategy: exponentialWaitStrategy({
         timeout: 100, 
         exponent: 2
@@ -124,7 +124,7 @@ const retryPolicy = RetryPolicy({
 Pass an array with timeouts which will be used in order.
 
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     waitStrategy: seriesWaitStrategy({
         delays: [100, 200, 600, 3000],
     }),
@@ -137,7 +137,7 @@ const retryPolicy = RetryPolicy({
 In case you need to base your retry time on Retry-After headers, you can use the lastError.
 
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     waitStrategy: (retryCount, lastError) => retryCount * 100 + Math.PI
 });
 ```
@@ -148,7 +148,7 @@ It is always advisable to not try infinitely. Using a stop strategy you can set 
 #### NeverStopStrategy (default)
 This strategy will never stop until it succeeds.
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     stopStrategy: neverStopStrategy(),
 });
 ```
@@ -156,7 +156,7 @@ const retryPolicy = RetryPolicy({
 #### AfterAttemptStopStrategy 
 When the number of attempts is reached it will stop.
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     stopStrategy: afterAttemptStopStrategy({
         attempt: 10,
     }),
@@ -165,7 +165,7 @@ const retryPolicy = RetryPolicy({
 
 #### Make your own
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     stopStrategy: (retryCount) => retryCount > 5 || retryCount + previousRetryCounts > 100,
 });
 ```
@@ -179,7 +179,7 @@ One or more ErrorDetectionStrategies can be set to filter errors.
 #### AllErrorDetectionStrategy (default)
 Simple sees all errors as retryable. As this is the default strategy it can be ommitted.
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     errorDetectionStrategies: [
         allErrorDetectionStrategy(
     )],
@@ -190,7 +190,7 @@ const retryPolicy = RetryPolicy({
 #### GenericErrorDetectionStrategy
 This strategy can be used to detect errors by class name.
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     errorDetectionStrategies: [
         genericErrorDetectionStrategy({
             errors: [RangeError],
@@ -202,7 +202,7 @@ const retryPolicy = RetryPolicy({
 
 #### Make your own
 ```javascript
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     errorDetectionStrategies: [
         (error) => error.message === 'My Retryable Error'
     ],
@@ -218,7 +218,7 @@ const myWaitStrategy = (paramA) {
     }
 }
   
-const retryPolicy = RetryPolicy({
+const retryPolicy = new RetryPolicy({
     waitStrategy: myWaitStrategy(5000),
 });
 ```

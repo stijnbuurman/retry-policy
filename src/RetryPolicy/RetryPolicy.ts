@@ -1,59 +1,63 @@
-import { RetryState } from '../';
-import {
-  allErrorDetectionStrategy,
-  IsRetryable
-} from '../ErrorDetectionStrategy';
-import { delayWithPass } from '../helpers/helpers';
-import { IsStopped, neverStopStrategy } from '../StopStrategy';
-import { GetWaitTime, linearWaitStrategy } from '../WaitStrategy';
+import {fixedWaitStrategy, neverStopStrategy, RetryState, StopStrategy} from '../';
+import {allErrorDetectionStrategy, ErrorDetectionStrategy,} from '../ErrorDetectionStrategy';
+import {delayWithPass} from '../helpers/helpers';
+import type {WaitStrategy} from '../WaitStrategy';
 
-export const RetryPolicy = ({
-  errorDetectionStrategies = [allErrorDetectionStrategy()],
-  stopStrategy = neverStopStrategy(),
-  waitStrategy = linearWaitStrategy()
-}: {
-  readonly errorDetectionStrategies?: ReadonlyArray<IsRetryable>;
-  readonly stopStrategy?: IsStopped;
-  readonly waitStrategy?: GetWaitTime;
-} = {}) => {
-  function handleRetryable(
-    error: Error,
-    retryState: RetryState
-  ): Promise<RetryState> {
-    const timeout = waitStrategy(retryState.getRetryCount(), error);
-    const newRetryState = retryState.addOneRetry(error);
-    return delayWithPass(timeout)(newRetryState);
-  }
+export interface RetryPolicyOptions {
+    errorDetectionStrategies?: ErrorDetectionStrategy[];
+    stopStrategy?: StopStrategy;
+    waitStrategy?: WaitStrategy;
+}
 
-  function handleFatal(error: Error): Promise<Error> {
-    return Promise.reject(error);
-  }
+export class RetryPolicy {
+    public errorDetectionStrategies: ErrorDetectionStrategy[];
+    public stopStrategy: StopStrategy;
+    public waitStrategy: WaitStrategy;
 
-  function handleError(
-    error: Error,
-    retryState: RetryState = new RetryState()
-  ): Promise<RetryState | Error> {
-    return errorDetectionStrategies.some(isRetryable => isRetryable(error)) &&
-      !stopStrategy(retryState.getRetryCount())
-      ? handleRetryable(error, retryState)
-      : handleFatal(error);
-  }
+    constructor(options: RetryPolicyOptions = {}) {
+        this.errorDetectionStrategies = options.errorDetectionStrategies || [
+            allErrorDetectionStrategy(),
+        ];
+        this.stopStrategy = options.stopStrategy || neverStopStrategy();
+        this.waitStrategy = options.waitStrategy || fixedWaitStrategy({timeout: 0});
+    }
 
-  function executeAsync<T>(
-    action: (...args) => Promise<any>,
-    retryState: RetryState = new RetryState()
-  ): Promise<T> {
-    return action().catch(error => {
-      return handleError(error, retryState).then(
-        (newRetryState: RetryState) => {
-          return executeAsync(action, newRetryState);
+    execute<T>(
+        action: () => Promise<T>,
+        retryState: RetryState = new RetryState()
+    ): Promise<T> {
+        return action().catch((error) => {
+            return this.handleError(error, retryState).then(
+                (newRetryState: RetryState) => {
+                    return this.execute(action, newRetryState);
+                }
+            );
+        });
+    }
+
+    private handleRetryable(error: Error, retryState: RetryState): Promise<RetryState> {
+        const timeout = this.waitStrategy(retryState.getRetryCount(), error);
+
+        if (timeout === undefined) {
+            return Promise.reject(new Error('Invalid wait time'));
         }
-      );
-    });
-  }
 
-  return {
-    execute: executeAsync,
-    handleError
-  };
-};
+        const newRetryState = retryState.addOneRetry(error);
+        return delayWithPass<RetryState>(timeout)(newRetryState);
+    }
+
+    private handleFatal(error: Error): Promise<never> {
+        return Promise.reject(error);
+    }
+
+    private handleError(
+        error: Error,
+        retryState: RetryState
+    ): Promise<RetryState> {
+        return this.errorDetectionStrategies.some((isRetryable) =>
+            isRetryable(error)
+        ) && !this.stopStrategy(retryState.getRetryCount())
+            ? this.handleRetryable(error, retryState)
+            : this.handleFatal(error);
+    }
+}

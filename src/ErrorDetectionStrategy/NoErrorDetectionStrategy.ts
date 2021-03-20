@@ -1,4 +1,4 @@
-import { ErrorDetectionStrategy } from './ErrorDetectionStrategy';
+import type {ErrorDetectionStrategyBuilder} from './ErrorDetectionStrategyBuilder';
 
-export const noErrorDetectionStrategy: ErrorDetectionStrategy = () => () =>
-  false;
+export const noErrorDetectionStrategy: ErrorDetectionStrategyBuilder = () => () =>
+    false;
