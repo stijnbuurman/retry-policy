@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>@stinoz/retry-policy</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for @stinoz/retry-policy">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -40,8 +41,6 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -51,12 +50,7 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
-			<h1> @stinoz/retry-policy</h1>
+			<h1>@stinoz/retry-policy</h1>
 		</div>
 	</div>
 </header>
@@ -66,77 +60,290 @@
 			<div class="tsd-panel tsd-typography">
 				<p><a href="https://circleci.com/gh/stijnbuurman/retry-policy/tree/master"><img src="https://circleci.com/gh/stijnbuurman/retry-policy/tree/master.svg?style=svg" alt="CircleCI"></a>
 				<a href="https://codecov.io/gh/stijnbuurman/retry-policy"><img src="https://codecov.io/gh/stijnbuurman/retry-policy/branch/master/graph/badge.svg" alt="codecov"></a></p>
-				<h1 id="retry-policy">retry-policy</h1>
-				<p>A retry policy framework for javascript</p>
+				<a href="#retry-policy" id="retry-policy" style="color: inherit; text-decoration: none;">
+					<h1>retry-policy</h1>
+				</a>
+				<p>This library tries to help with making applications tolerant for temporary errors.</p>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>Features</h2>
+				</a>
+				<ul>
+					<li>Use waitStrategies to specify timeouts between retries</li>
+					<li>Use stopStrategies to specify number of attempts</li>
+					<li>Use errorDetectionStrategies to recognize retryable errors</li>
+					<li>Easily make your own strategies</li>
+					<li>Written in Typescript</li>
+					<li>Has an interceptor for Axios! (<a href="https://github.com/stijnbuurman/axios-retry-policy">axios-retry-policy</a>)</li>
+				</ul>
+				<a href="#how-to-install" id="how-to-install" style="color: inherit; text-decoration: none;">
+					<h2>How to install</h2>
+				</a>
+				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> @</span><span style="color: #001080">stinoz</span><span style="color: #000000">/</span><span style="color: #001080">retry</span><span style="color: #000000">-</span><span style="color: #001080">policy</span>
+</code></pre>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>Example</h2>
+				</a>
+				<pre><code class="language-javascript"><span style="color: #008000">// import RetryPolicy and strategies </span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0070C1">afterAttemptStopStrategy</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #0070C1">exponentialWaitStrategy</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #0070C1">RetryPolicy</span><span style="color: #000000">} = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@stinoz/retry-policy&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">  </span>
+<span style="color: #008000">// Build the retry policy  </span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">stopStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">afterAttemptStopStrategy</span><span style="color: #000000">({</span><span style="color: #001080">attempts:</span><span style="color: #000000"> </span><span style="color: #098658">5</span><span style="color: #000000">}),</span>
+<span style="color: #000000">    </span><span style="color: #001080">waitStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">exponentialWaitStrategy</span><span style="color: #000000">({</span><span style="color: #001080">timeout:</span><span style="color: #000000"> </span><span style="color: #098658">500</span><span style="color: #000000">}),</span>
+<span style="color: #000000">});</span>
+<span style="color: #000000">  </span>
+<span style="color: #008000">// execute the unreliable action</span>
+<span style="color: #001080">retryPolicy</span><span style="color: #000000">.</span><span style="color: #795E26">execute</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">unreliableAction</span><span style="color: #000000">();</span>
+<span style="color: #000000">});</span>
+
+</code></pre>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<a href="#retrypolicy" id="retrypolicy" style="color: inherit; text-decoration: none;">
+					<h3>RetryPolicy</h3>
+				</a>
+				<p>The retry policy is responsible for executing retryable actions. Currently it only supports promise based actions (which should be easy to work around)</p>
+				<a href="#make-a-new-retrypolicy" id="make-a-new-retrypolicy" style="color: inherit; text-decoration: none;">
+					<h4>Make a new RetryPolicy</h4>
+				</a>
+				<p>All parameters can be ommited.</p>
+				<p>These are the defaults:</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">stopStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">neverStopStrategy</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #001080">waitStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">linearWaitStrategy</span><span style="color: #000000">({</span><span style="color: #001080">timeout:</span><span style="color: #000000"> </span><span style="color: #098658">100</span><span style="color: #000000">, </span><span style="color: #001080">slope:</span><span style="color: #000000"> </span><span style="color: #098658">100</span><span style="color: #000000">}),</span>
+<span style="color: #000000">    </span><span style="color: #001080">errorDetectionStrategies:</span><span style="color: #000000"> [</span><span style="color: #795E26">allErrorDetectionStrategy</span><span style="color: #000000">()],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#execute-an-action" id="execute-an-action" style="color: inherit; text-decoration: none;">
+					<h4>Execute an action</h4>
+				</a>
+				<p>Make sure to return the promise.
+					All data of this promise will be passed in case it succeeds.
+				In case it fails the last error will be passed unmodified. </p>
+				<pre><code class="language-javascript"><span style="color: #008000">// execute the unreliable action</span>
+<span style="color: #001080">retryPolicy</span><span style="color: #000000">.</span><span style="color: #795E26">execute</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">unreliableAction</span><span style="color: #000000">();</span>
+<span style="color: #000000">})</span>
+<span style="color: #000000">.</span><span style="color: #795E26">then</span><span style="color: #000000">((</span><span style="color: #001080">response</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// this part is reached when:</span>
+<span style="color: #000000">    </span><span style="color: #008000">// - the action was successfull</span>
+<span style="color: #000000">    </span><span style="color: #008000">// - the action first was unsuccessfull but after x retries was</span>
+<span style="color: #000000">      </span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;success&#039;</span><span style="color: #000000">, </span><span style="color: #001080">response</span><span style="color: #000000">);</span>
+<span style="color: #000000">})</span>
+<span style="color: #000000">.</span><span style="color: #795E26">catch</span><span style="color: #000000">((</span><span style="color: #001080">lastError</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// This part is reached when:</span>
+<span style="color: #000000">    </span><span style="color: #008000">// - the action failed with a non retryable error</span>
+<span style="color: #000000">    </span><span style="color: #008000">// - the action was retried but the max attempts was reached</span>
+<span style="color: #000000">      </span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;failed&#039;</span><span style="color: #000000">, </span><span style="color: #001080">lastError</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#waitstrategy" id="waitstrategy" style="color: inherit; text-decoration: none;">
+					<h3>WaitStrategy</h3>
+				</a>
+				<a href="#fixed--default" id="fixed--default" style="color: inherit; text-decoration: none;">
+					<h4>Fixed  (default)</h4>
+				</a>
+				<p>This strategy keeps it simple and always uses the same timout.</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">waitStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">fixedWaitStrategy</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">timeout:</span><span style="color: #000000"> </span><span style="color: #098658">100</span>
+<span style="color: #000000">    }),</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#linear" id="linear" style="color: inherit; text-decoration: none;">
+					<h4>Linear</h4>
+				</a>
+				<p>This strategy increases its timeout steady: e.g. 200, 400, 600</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">waitStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">linearWaitStrategy</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">timeout:</span><span style="color: #000000"> </span><span style="color: #098658">100</span><span style="color: #000000">, </span>
+<span style="color: #000000">        </span><span style="color: #001080">slope:</span><span style="color: #000000"> </span><span style="color: #098658">1</span>
+<span style="color: #000000">    }),</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#exponential" id="exponential" style="color: inherit; text-decoration: none;">
+					<h4>Exponential</h4>
+				</a>
+				<p>This strategy increases its timeout exponentially: e.g. 200, 400, 800</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">waitStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">exponentialWaitStrategy</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">timeout:</span><span style="color: #000000"> </span><span style="color: #098658">100</span><span style="color: #000000">, </span>
+<span style="color: #000000">        </span><span style="color: #001080">exponent:</span><span style="color: #000000"> </span><span style="color: #098658">2</span>
+<span style="color: #000000">    }),</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#series" id="series" style="color: inherit; text-decoration: none;">
+					<h4>Series</h4>
+				</a>
+				<p>Pass an array with timeouts which will be used in order.</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">waitStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">seriesWaitStrategy</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">delays:</span><span style="color: #000000"> [</span><span style="color: #098658">100</span><span style="color: #000000">, </span><span style="color: #098658">200</span><span style="color: #000000">, </span><span style="color: #098658">600</span><span style="color: #000000">, </span><span style="color: #098658">3000</span><span style="color: #000000">],</span>
+<span style="color: #000000">    }),</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#make-your-own" id="make-your-own" style="color: inherit; text-decoration: none;">
+					<h4>Make your own</h4>
+				</a>
+				<p>In case you need to base your retry time on Retry-After headers, you can use the lastError.</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #795E26">waitStrategy</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">retryCount</span><span style="color: #000000">, </span><span style="color: #001080">lastError</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">retryCount</span><span style="color: #000000"> * </span><span style="color: #098658">100</span><span style="color: #000000"> + </span><span style="color: #267F99">Math</span><span style="color: #000000">.PI</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#stopstrategy" id="stopstrategy" style="color: inherit; text-decoration: none;">
+					<h3>StopStrategy</h3>
+				</a>
+				<p>It is always advisable to not try infinitely. Using a stop strategy you can set when to stop.</p>
+				<a href="#neverstopstrategy-default" id="neverstopstrategy-default" style="color: inherit; text-decoration: none;">
+					<h4>NeverStopStrategy (default)</h4>
+				</a>
+				<p>This strategy will never stop until it succeeds.</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">stopStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">neverStopStrategy</span><span style="color: #000000">(),</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#afterattemptstopstrategy" id="afterattemptstopstrategy" style="color: inherit; text-decoration: none;">
+					<h4>AfterAttemptStopStrategy</h4>
+				</a>
+				<p>When the number of attempts is reached it will stop.</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">stopStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">afterAttemptStopStrategy</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">attempt:</span><span style="color: #000000"> </span><span style="color: #098658">10</span><span style="color: #000000">,</span>
+<span style="color: #000000">    }),</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#make-your-own-1" id="make-your-own-1" style="color: inherit; text-decoration: none;">
+					<h4>Make your own</h4>
+				</a>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #795E26">stopStrategy</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">retryCount</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">retryCount</span><span style="color: #000000"> &gt; </span><span style="color: #098658">5</span><span style="color: #000000"> || </span><span style="color: #001080">retryCount</span><span style="color: #000000"> + </span><span style="color: #001080">previousRetryCounts</span><span style="color: #000000"> &gt; </span><span style="color: #098658">100</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#errordetectionstrategy" id="errordetectionstrategy" style="color: inherit; text-decoration: none;">
+					<h3>ErrorDetectionStrategy</h3>
+				</a>
+				<p>One or more ErrorDetectionStrategies can be set to filter errors.</p>
+				<a href="#allerrordetectionstrategy-default" id="allerrordetectionstrategy-default" style="color: inherit; text-decoration: none;">
+					<h4>AllErrorDetectionStrategy (default)</h4>
+				</a>
+				<p>Simple sees all errors as retryable. As this is the default strategy it can be ommitted.</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">errorDetectionStrategies:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">        </span><span style="color: #795E26">allErrorDetectionStrategy</span><span style="color: #000000">(</span>
+<span style="color: #000000">    )],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#genericerrordetectionstrategy" id="genericerrordetectionstrategy" style="color: inherit; text-decoration: none;">
+					<h4>GenericErrorDetectionStrategy</h4>
+				</a>
+				<p>This strategy can be used to detect errors by class name.</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">errorDetectionStrategies:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">        </span><span style="color: #795E26">genericErrorDetectionStrategy</span><span style="color: #000000">({</span>
+<span style="color: #000000">            </span><span style="color: #001080">errors:</span><span style="color: #000000"> [</span><span style="color: #267F99">RangeError</span><span style="color: #000000">],</span>
+<span style="color: #000000">        }</span>
+<span style="color: #000000">    )],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#make-your-own-2" id="make-your-own-2" style="color: inherit; text-decoration: none;">
+					<h4>Make your own</h4>
+				</a>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">errorDetectionStrategies:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">        (</span><span style="color: #001080">error</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">error</span><span style="color: #000000">.</span><span style="color: #001080">message</span><span style="color: #000000"> === </span><span style="color: #A31515">&#039;My Retryable Error&#039;</span>
+<span style="color: #000000">    ],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#custom-strategy-with-parameters" id="custom-strategy-with-parameters" style="color: inherit; text-decoration: none;">
+					<h3>Custom strategy with parameters</h3>
+				</a>
+				<p>When you want to make your own strategy that accepts parameters you can use this method:</p>
+				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">myWaitStrategy</span><span style="color: #000000"> = (</span><span style="color: #001080">paramA</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">return</span><span style="color: #000000"> (</span><span style="color: #001080">retryCount</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #098658">500</span><span style="color: #000000"> * </span><span style="color: #001080">retryCount</span><span style="color: #000000"> + </span><span style="color: #001080">paramA</span><span style="color: #000000">;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
+<span style="color: #000000">  </span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">retryPolicy</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">RetryPolicy</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">waitStrategy:</span><span style="color: #000000"> </span><span style="color: #795E26">myWaitStrategy</span><span style="color: #000000">(</span><span style="color: #098658">5000</span><span style="color: #000000">),</span>
+<span style="color: #000000">});</span>
+</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/errordetectionstrategy.html">Error<wbr>Detection<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/errordetectionstrategy_allerrordetectionstrategy.html">Error<wbr>Detection<wbr>Strategy/<wbr>All<wbr>Error<wbr>Detection<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/errordetectionstrategy_errordetectionstrategybuilder.html">Error<wbr>Detection<wbr>Strategy/<wbr>Error<wbr>Detection<wbr>Strategy<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/errordetectionstrategy_genericerrordetectionstrategy.html">Error<wbr>Detection<wbr>Strategy/<wbr>Generic<wbr>Error<wbr>Detection<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/errordetectionstrategy_noerrordetectionstrategy.html">Error<wbr>Detection<wbr>Strategy/<wbr>NoError<wbr>Detection<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/retrypolicy_retrypolicy.html">Retry<wbr>Policy/<wbr>Retry<wbr>Policy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/retrystate_retrystate.html">Retry<wbr>State/<wbr>Retry<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stopstrategy.html">Stop<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stopstrategy_afterattemptstopstrategy.html">Stop<wbr>Strategy/<wbr>After<wbr>Attempt<wbr>Stop<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stopstrategy_neverstopstrategy.html">Stop<wbr>Strategy/<wbr>Never<wbr>Stop<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stopstrategy_stopstrategybuilder.html">Stop<wbr>Strategy/<wbr>Stop<wbr>Strategy<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/waitstrategy.html">Wait<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/waitstrategy_exponentialwaitstrategy.html">Wait<wbr>Strategy/<wbr>Exponential<wbr>Wait<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/waitstrategy_fixedwaitstrategy.html">Wait<wbr>Strategy/<wbr>Fixed<wbr>Wait<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/waitstrategy_linearwaitstrategy.html">Wait<wbr>Strategy/<wbr>Linear<wbr>Wait<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/waitstrategy_serieswaitstrategy.html">Wait<wbr>Strategy/<wbr>Series<wbr>Wait<wbr>Strategy</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/waitstrategy_waitstrategybuilder.html">Wait<wbr>Strategy/<wbr>Wait<wbr>Strategy<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/helpers_helpers.html">helpers/helpers</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/index.html">index</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="classes/retrystate.html" class="tsd-kind-icon">Retry<wbr>State</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#errorclass" class="tsd-kind-icon">Error<wbr>Class</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#errordetectionstrategy" class="tsd-kind-icon">Error<wbr>Detection<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#getwaittime" class="tsd-kind-icon">Get<wbr>Wait<wbr>Time</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#isretryable" class="tsd-kind-icon">Is<wbr>Retryable</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#isstopped" class="tsd-kind-icon">Is<wbr>Stopped</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#stopstrategy" class="tsd-kind-icon">Stop<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#waitstrategy" class="tsd-kind-icon">Wait<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#retrypolicy" class="tsd-kind-icon">Retry<wbr>Policy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#afterattemptstopstrategy" class="tsd-kind-icon">after<wbr>Attempt<wbr>Stop<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#allerrordetectionstrategy" class="tsd-kind-icon">all<wbr>Error<wbr>Detection<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#delaywithpass" class="tsd-kind-icon">delay<wbr>With<wbr>Pass</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#exponentialwaitstrategy" class="tsd-kind-icon">exponential<wbr>Wait<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#fixedwaitstrategy" class="tsd-kind-icon">fixed<wbr>Wait<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#genericerrordetectionstrategy" class="tsd-kind-icon">generic<wbr>Error<wbr>Detection<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#linearwaitstrategy" class="tsd-kind-icon">linear<wbr>Wait<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#neverstopstrategy" class="tsd-kind-icon">never<wbr>Stop<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#noerrordetectionstrategy" class="tsd-kind-icon">no<wbr>Error<wbr>Detection<wbr>Strategy</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#serieswaitstrategy" class="tsd-kind-icon">series<wbr>Wait<wbr>Strategy</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -147,65 +354,23 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
