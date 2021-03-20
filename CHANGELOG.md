@@ -1,6 +1,21 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+# [2.0.0](https://github.com/stijnbuurman/retry-policy/compare/v1.5.0...v2.0.0) (2021-03-20)
+
+### Bug fixes
+- Make 0 waiting time the default WaitingStrategy
+- Lot of types has been fixed
+
+### Dependencies
+- Moved from tslint to eslint
+- Removed nsp
+- Updated all dependencies
+
+### Breaking change
+- RetryPolicy is now a class
+    - this can be fixed by replacing `RetryPolicy()` with `new RetryPolicy()`
 
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/stijnbuurman/retry-policy/compare/1.4.3...1.5.0) (2018-05-23)
